@@ -8,7 +8,7 @@ class DataBaseUtil {
       path.join(databasePath, 'places.db'),
       onCreate: (database, version) {
         return database.execute(
-          'CREATE TABLE places (id TEXT PRIMARY KEY, title TEXT, image TEXT)',
+          'CREATE TABLE places (id TEXT PRIMARY KEY, title TEXT, image TEXT, latitude REAL, longitude REAL, address TEXT)',
         );
       },
       version: 1,

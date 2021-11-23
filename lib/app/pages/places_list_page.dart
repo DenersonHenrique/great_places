@@ -43,6 +43,9 @@ class PlacesListPage extends StatelessWidget {
                             ),
                           ),
                           title: Text(greatePlaces.getItem(index).title),
+                          subtitle: Text(
+                            greatePlaces.getItem(index).location!.address!,
+                          ),
                           onTap: () {},
                         ),
                       ),
