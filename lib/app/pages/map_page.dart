@@ -54,12 +54,13 @@ class _MapPageState extends State<MapPage> {
           zoom: 12,
         ),
         onTap: widget.isReadonly ? null : _selectPosition,
-        markers: _pickedPosition == null
+        markers: (_pickedPosition == null && !widget.isReadonly)
             ? Set()
             : {
                 Marker(
                   markerId: const MarkerId('pos1'),
-                  position: _pickedPosition!,
+                  position:
+                      _pickedPosition ?? widget.initialLocation.toLatLng(),
                 ),
               },
       ),

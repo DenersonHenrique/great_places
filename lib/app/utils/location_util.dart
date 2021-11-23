@@ -15,6 +15,6 @@ class LocationUtil {
     final url =
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=${AppKey.MAP_API_KEY}';
     final response = await http.get(Uri.parse(url));
-    return json.decode(response.body)['results']['0']['formatted_address'];
+    return json.decode(response.body)['results'][0]['formatted_address'];
   }
 }

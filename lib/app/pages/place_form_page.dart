@@ -33,7 +33,7 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
   bool _isValidForm() => _titleController.text.isNotEmpty;
 
   void _submit() {
-    if (_isValidForm()) return;
+    if (!_isValidForm()) return;
 
     Provider.of<GreatPlacesProvider>(context, listen: false).addPlace(
       _titleController.text,
@@ -64,6 +64,9 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
                       decoration: const InputDecoration(
                         labelText: 'Título',
                       ),
+                      onChanged: (text) {
+                        setState(() {});
+                      },
                     ),
                     const SizedBox(height: 10.0),
                     ImageInputWidget(_selectImage),
