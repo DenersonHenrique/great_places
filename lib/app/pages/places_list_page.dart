@@ -22,23 +22,38 @@ class PlacesListPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Consumer<GreatPlacesProvider>(
-        child: const Center(
-          child: Text('Nenhum local cadastrado!'),
-        ),
-        builder: (ctx, greatePlaces, ch) => greatePlaces.itemsCount == 0
-            ? ch!
-            : ListView.builder(
-                itemCount: greatePlaces.itemsCount,
-                itemBuilder: (ctx, index) => ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: FileImage(
-                      greatePlaces.getItem(index).image,
-                    ),
-                  ),
-                  title: Text(greatePlaces.getItem(index).title),
-                  onTap: () {},
+      body: FutureBuilder(
+        future: Provider.of<GreatPlacesProvider>(context, listen: false)
+            .loadPlaces(),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? const Center(child: CircularProgressIndicator())
+            : Consumer<GreatPlacesProvider>(
+                child: const Center(
+                  child: Text('Nenhum local cadastrado!'),
                 ),
+                builder: (ctx, greatePlaces, ch) => greatePlaces.itemsCount == 0
+                    ? ch!
+                    : ListView.builder(
+                        itemCount: greatePlaces.itemsCount,
+                        itemBuilder: (ctx, index) => ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: FileImage(
+                              greatePlaces.getItem(index).image,
+                            ),
+                          ),
+                          title: Text(greatePlaces.getItem(index).title),
+                          subtitle: Text(
+                            greatePlaces.getItem(index).location!.address!,
+                          ),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              AppRoutes.PLACE_DETAIL,
+                              arguments: greatePlaces.getItem(index),
+                            );
+                          },
+                        ),
+                      ),
               ),
       ),
     );
