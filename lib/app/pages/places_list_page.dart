@@ -4,9 +4,14 @@ import 'package:great_places/app/constants/app_routes.dart';
 import 'package:great_places/app/constants/app_string.dart';
 import 'package:great_places/app/providers/great_places_provider.dart';
 
-class PlacesListPage extends StatelessWidget {
+class PlacesListPage extends StatefulWidget {
   const PlacesListPage({Key? key}) : super(key: key);
 
+  @override
+  State<PlacesListPage> createState() => _PlacesListPageState();
+}
+
+class _PlacesListPageState extends State<PlacesListPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -37,19 +42,40 @@ class PlacesListPage extends StatelessWidget {
                       ? ch!
                       : ListView.builder(
                           itemCount: greatePlaces.itemsCount,
-                          itemBuilder: (ctx, index) => ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: FileImage(
-                                greatePlaces.getItem(index).image,
+                          itemBuilder: (ctx, index) => Dismissible(
+                            key: Key(greatePlaces.getItem(index).id),
+                            direction: DismissDirection.startToEnd,
+                            background: Container(
+                              color: Colors.red,
+                              child: const Align(
+                                alignment: Alignment(-0.9, 0.0),
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                            title: Text(greatePlaces.getItem(index).title),
-                            subtitle: Text(
-                              greatePlaces.getItem(index).location!.address!,
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: FileImage(
+                                  greatePlaces.getItem(index).image,
+                                ),
+                              ),
+                              title: Text(greatePlaces.getItem(index).title),
+                              subtitle: Text(
+                                greatePlaces.getItem(index).location!.address!,
+                              ),
+                              onTap: () => Navigator.of(context).pushNamed(
+                                AppRoutes.PLACE_DETAIL,
+                                arguments: greatePlaces.getItem(index),
+                              ),
                             ),
-                            onTap: () => Navigator.of(context).pushNamed(
-                              AppRoutes.PLACE_DETAIL,
-                              arguments: greatePlaces.getItem(index),
+                            onDismissed: (direction) => setState(
+                              () {
+                                greatePlaces.removePlace(
+                                  greatePlaces.getItem(index).id,
+                                );
+                              },
                             ),
                           ),
                         ),

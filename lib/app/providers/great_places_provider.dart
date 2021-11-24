@@ -64,4 +64,9 @@ class GreatPlacesProvider with ChangeNotifier {
         .toList();
     notifyListeners();
   }
+
+  void removePlace(String id) async {
+    await DataBaseUtil.delete('places', id);
+    notifyListeners();
+  }
 }
