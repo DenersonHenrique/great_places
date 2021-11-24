@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:great_places/app/pages/map_page.dart';
 import 'package:great_places/app/models/place_model.dart';
+import 'package:great_places/app/constants/app_string.dart';
 
 class PlaceDetailPage extends StatelessWidget {
   const PlaceDetailPage({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class PlaceDetailPage extends StatelessWidget {
           const SizedBox(height: 10),
           TextButton.icon(
             icon: const Icon(Icons.map),
-            label: const Text('Ver no mapa.'),
+            label: Text(AppString.seeInMap),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                 fullscreenDialog: true,

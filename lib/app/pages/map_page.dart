@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:great_places/app/models/place_model.dart';
+import 'package:great_places/app/constants/app_string.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
@@ -22,48 +23,41 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   LatLng? _pickedPosition;
 
-  void _selectPosition(LatLng position) {
-    setState(() {
-      _pickedPosition = position;
-    });
-  }
+  void _selectPosition(LatLng position) =>
+      setState(() => _pickedPosition = position);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Selecione'),
-        actions: <Widget>[
-          if (!widget.isReadonly)
-            IconButton(
-              icon: const Icon(Icons.check),
-              onPressed: _pickedPosition == null
-                  ? null
-                  : () {
-                      Navigator.of(context).pop(_pickedPosition);
-                    },
-            ),
-        ],
-      ),
-      body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: LatLng(
-            widget.initialLocation.latitude,
-            widget.initialLocation.longitude,
-          ),
-          zoom: 12,
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(AppString.toSelect),
+          actions: <Widget>[
+            if (!widget.isReadonly)
+              IconButton(
+                icon: const Icon(Icons.check),
+                onPressed: _pickedPosition == null
+                    ? null
+                    : () => Navigator.of(context).pop(_pickedPosition),
+              ),
+          ],
         ),
-        onTap: widget.isReadonly ? null : _selectPosition,
-        markers: (_pickedPosition == null && !widget.isReadonly)
-            ? Set()
-            : {
-                Marker(
-                  markerId: const MarkerId('pos1'),
-                  position:
-                      _pickedPosition ?? widget.initialLocation.toLatLng(),
-                ),
-              },
-      ),
-    );
-  }
+        body: GoogleMap(
+          initialCameraPosition: CameraPosition(
+            target: LatLng(
+              widget.initialLocation.latitude,
+              widget.initialLocation.longitude,
+            ),
+            zoom: 12,
+          ),
+          onTap: widget.isReadonly ? null : _selectPosition,
+          markers: (_pickedPosition == null && !widget.isReadonly)
+              ? Set()
+              : {
+                  Marker(
+                    markerId: const MarkerId('pos1'),
+                    position:
+                        _pickedPosition ?? widget.initialLocation.toLatLng(),
+                  ),
+                },
+        ),
+      );
 }

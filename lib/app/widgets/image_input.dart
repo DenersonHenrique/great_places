@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart' as path;
 import 'package:image_picker/image_picker.dart';
+import 'package:great_places/app/constants/app_string.dart';
 import 'package:path_provider/path_provider.dart' as syspath;
 
 class ImageInputWidget extends StatefulWidget {
@@ -55,7 +56,7 @@ class _ImageInputWidgetState extends State<ImageInputWidget> {
                     width: double.infinity,
                     fit: BoxFit.cover,
                   )
-                : const Text('Nehuma imagem!'),
+                : Text(AppString.emptyImage),
           ),
           const SizedBox(
             width: 10.0,
@@ -64,7 +65,7 @@ class _ImageInputWidgetState extends State<ImageInputWidget> {
             child: TextButton.icon(
               onPressed: _takePicture,
               icon: const Icon(Icons.camera),
-              label: const Text('Tirar foto'),
+              label: Text(AppString.takePictureBtn),
             ),
           ),
         ],
