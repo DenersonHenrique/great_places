@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:great_places/app/pages/map_page.dart';
 import 'package:great_places/app/utils/location_util.dart';
+import 'package:great_places/app/constants/app_string.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationInputWidget extends StatefulWidget {
@@ -24,9 +25,7 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
       longitude: longitude,
     );
 
-    setState(() {
-      _previewImageUrl = staticMapImageUrl;
-    });
+    setState(() => _previewImageUrl = staticMapImageUrl);
   }
 
   Future<void> _getCurrentUserLocation() async {
@@ -56,43 +55,41 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          height: 200,
-          width: double.infinity,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: const Color(0xFF909497),
+  Widget build(BuildContext context) => Column(
+        children: <Widget>[
+          Container(
+            height: 200,
+            width: double.infinity,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
+                color: const Color(0xFF909497),
+              ),
             ),
+            child: _previewImageUrl == null
+                ? Text(AppString.emptyLocation)
+                : Image.network(
+                    _previewImageUrl!,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
           ),
-          child: _previewImageUrl == null
-              ? const Text('Localização não informada')
-              : Image.network(
-                  _previewImageUrl!,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextButton.icon(
-              onPressed: _getCurrentUserLocation,
-              icon: const Icon(Icons.location_on),
-              label: const Text('Localização atual'),
-            ),
-            TextButton.icon(
-              onPressed: _selectOnMap,
-              icon: const Icon(Icons.map),
-              label: const Text('Selecione no mapa'),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextButton.icon(
+                onPressed: _getCurrentUserLocation,
+                icon: const Icon(Icons.location_on),
+                label: Text(AppString.currentLocationBtn),
+              ),
+              TextButton.icon(
+                onPressed: _selectOnMap,
+                icon: const Icon(Icons.map),
+                label: Text(AppString.selectInMap),
+              ),
+            ],
+          ),
+        ],
+      );
 }

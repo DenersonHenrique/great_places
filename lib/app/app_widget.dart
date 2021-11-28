@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:great_places/app/utils/app_routes.dart';
+import 'package:great_places/app/constants/app_routes.dart';
+import 'package:great_places/app/constants/app_string.dart';
 import 'package:great_places/app/pages/place_form_page.dart';
 import 'package:great_places/app/pages/places_list_page.dart';
 import 'package:great_places/app/pages/place_detail_page.dart';
@@ -21,7 +22,7 @@ class _AppWidgetState extends State<AppWidget> {
     return ChangeNotifierProvider(
       create: (ctx) => GreatPlacesProvider(),
       child: MaterialApp(
-        title: 'Great Places',
+        title: AppString.appTitle,
         theme: _themeData.copyWith(
           visualDensity: VisualDensity.adaptivePlatformDensity,
           colorScheme: _themeData.colorScheme.copyWith(

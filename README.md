@@ -1,6 +1,15 @@
-# great_places
+# flutter_great_places
 
-A new Flutter project.
+Great Places - Flutter App
+
+### Prerequisities
+
+[Flutter SDK](https://flutter.dev/)
+
+### Description
+
+This is an application to starting skills with native features of dispositivos using Flutter.
+In this project are used features de Camera and location. And also add data in the local database.
 
 ## Getting Started
 
@@ -14,3 +23,21 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Project config
+
+To a success build and execute, is to need config key for loading and view maps. This config can done in the file: app_key.dart.
+
+## Reference of study and create.
+
+[Aprenda Flutter e Desenvolva Apps Para Android e IOS 2021](https://www.udemy.com/course/curso-flutter/)
+
+Section: Native features.
+
+## Author
+
+- **Denerson Henrique** - [Linkedin](www.linkedin.com/in/denersonhenrique) - [GitHub](https://github.com/DenersonHenrique)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:great_places/app/widgets/image_input.dart';
+import 'package:great_places/app/constants/app_string.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:great_places/app/widgets/location_input.dart';
 import 'package:great_places/app/providers/great_places_provider.dart';
@@ -19,15 +20,11 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
   late LatLng _pickedPosition;
 
   void _selectImage(File pickedImage) => setState(
-        () {
-          _pickedImage = pickedImage;
-        },
+        () => _pickedImage = pickedImage,
       );
 
   void _selectPosition(LatLng position) => setState(
-        () {
-          _pickedPosition = position;
-        },
+        () => _pickedPosition = position,
       );
 
   bool _isValidForm() => _titleController.text.isNotEmpty;
@@ -45,53 +42,49 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Novo Lugar'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      controller: _titleController,
-                      decoration: const InputDecoration(
-                        labelText: 'Título',
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(AppString.newPlace),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: <Widget>[
+                      TextField(
+                        controller: _titleController,
+                        decoration: InputDecoration(
+                          labelText: AppString.titleLabel,
+                        ),
+                        onChanged: (text) => setState(() {}),
                       ),
-                      onChanged: (text) {
-                        setState(() {});
-                      },
-                    ),
-                    const SizedBox(height: 10.0),
-                    ImageInputWidget(_selectImage),
-                    const SizedBox(height: 10.0),
-                    LocationInputWidget(_selectPosition),
-                  ],
+                      const SizedBox(height: 10.0),
+                      ImageInputWidget(_selectImage),
+                      const SizedBox(height: 10.0),
+                      LocationInputWidget(_selectPosition),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          ElevatedButton.icon(
-            onPressed: _isValidForm() ? _submit : null,
-            icon: const Icon(Icons.add),
-            label: const Text('Adicionar'),
-            style: ElevatedButton.styleFrom(
-              textStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+            ElevatedButton.icon(
+              onPressed: _isValidForm() ? _submit : null,
+              icon: const Icon(Icons.add),
+              label: Text(AppString.addLabel),
+              style: ElevatedButton.styleFrom(
+                textStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                elevation: 0,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                primary: Theme.of(context).colorScheme.secondary,
               ),
-              elevation: 0,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              primary: Theme.of(context).colorScheme.secondary,
             ),
-          ),
-        ],
-      ),
-    );
-  }
+          ],
+        ),
+      );
 }

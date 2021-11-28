@@ -28,4 +28,9 @@ class DataBaseUtil {
     final database = await DataBaseUtil.database();
     return database.query(table);
   }
+
+  static Future<int> delete(String table, String id) async {
+    final database = await DataBaseUtil.database();
+    return await database.delete(table, where: 'id = ?', whereArgs: [id]);
+  }
 }
